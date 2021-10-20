@@ -2,27 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchCurrencies } from '../actions/currenciesAction';
+import Header from '../components/Header';
 
 class Wallet extends React.Component {
   componentDidMount() {
-    const { fetchCurrencies } = this.props;
-    fetchCurrencies();
+    const { getCurrencies } = this.props;
+    getCurrencies();
   }
 
   render() {
-    const { email, currencies, loading } = this.props;
+    const { currencies, loading } = this.props;
     if (loading) return (<div>Carregando...</div>);
     return (
       <div>
-        <header>
-          <section>
-            <span data-testid="email-field">{ email }</span>
-          </section>
-          <section>
-            <span data-testid="total-field">0</span>
-            <span data-testid="header-currency-field">BRL</span>
-          </section>
-        </header>
+        <Header />
         <form>
           <label htmlFor="value-field">
             Valor:
@@ -36,7 +29,12 @@ class Wallet extends React.Component {
             Moeda
             <select name="moeda" id="moeda-field">
               {
-                Object.keys(currencies).map((key) => (<option>{ key }</option>))
+                Object.keys(currencies).map((key) => (
+                  <option
+                    key={ key }
+                  >
+                    { key }
+                  </option>))
               }
             </select>
           </label>
@@ -65,18 +63,19 @@ class Wallet extends React.Component {
 }
 
 Wallet.propTypes = {
-  email: PropTypes.string,
+  currencies: PropTypes.object,
+  getCurrencies: PropTypes.func,
+  loading: PropTypes.bool,
 }.isRequired;
 
 const mapStateToProps = (state) => ({
-  email: state.user.email,
   currencies: state.currenciesReducer.currencies,
   loading: state.currenciesReducer.loading,
   error: state.currenciesReducer.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchCurrencies: () => dispatch(fetchCurrencies()),
+  getCurrencies: () => dispatch(fetchCurrencies()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

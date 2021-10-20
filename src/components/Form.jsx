@@ -14,9 +14,9 @@ class Form extends Component {
           Descrição:
           <textarea type="text" id="description-field" />
         </label>
-        <label htmlFor="moeda-field">
+        <label htmlFor="currency-field">
           Moeda
-          <select name="moeda" id="moeda-field">
+          <select name="currency" id="currency-field">
             {
               Object.keys(currencies).map((key) => (
                 <option
@@ -27,9 +27,9 @@ class Form extends Component {
             }
           </select>
         </label>
-        <label htmlFor="payment-method-field">
+        <label htmlFor="method-field">
           Método de pagamento
-          <select name="payment-method" id="payment-method-field">
+          <select name="method" id="method-field">
             <option value="money-bills">Dinheiro</option>
             <option value="debt">Cartão de Débito</option>
             <option value="credit">Cartão de Crédito</option>
